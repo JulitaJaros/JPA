@@ -1,11 +1,17 @@
 package org.example.jpa.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class RecipeModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +38,13 @@ public class RecipeModel {
 
      @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipeModel")
      private Set<IngredienModel> ingredients = new HashSet<>();
+
+     @ManyToMany
+     @JoinTable(name = "recipeModel_categoryModel",
+             joinColumns = @JoinColumn(name = "recipeModel_id"),
+    inverseJoinColumns = @JoinColumn(name = "categoryModel_id"))
+    private Set<CategoryModel> categories = new HashSet<>();
+
 
 
 
